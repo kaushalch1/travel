@@ -8,10 +8,16 @@
 <body>
     <form action="/login" method="post">
         <label>Login:</label>
+        <input type="email" name="email" placeholder="Enter your email:" required>
+        <input type="password" name="password" placeholder="Enter your password:" required>
+        <button type="submit" id="submit">Submit</button>
+    </form>
+    <form action="/signup" method="post">
+        <label>Signup:</label>
         <input type="text" name="username" placeholder="Enter your username:" required>
         <input type="email" name="email" placeholder="Enter your email:" required>
         <input type="password" name="password" placeholder="Enter your password:" required>
-        <button type="submit" id="submit"></button>
+        <button type="submit">Submit</button>
     </form>
     <script src="index.js"></script>
 </body>
