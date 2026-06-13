@@ -1,4 +1,5 @@
 const { sign } = require('crypto');
+const { create } = require('domain');
 const express=require('express');
 const app=express();
 const path=require('path');
@@ -27,12 +28,12 @@ app.post('/login' , async(req,res)=>{
     let password=req.body.password;
     let email=req.body.email;
     let sear = await search(email);
-    if(sear){
+    if(sear===0){
         res.send("You don't have an account,signup here");
     }else{
         let log=await login(email,password);
         if(log){
-            res.send(`Welcome come back ${username}`);
+            res.send(`Welcome come back ${log.username}`);
         }else{
             res.send('The password is incorrect');
         }
@@ -43,7 +44,7 @@ app.post('/signup',async(req,res)=>{
     let email=req.body.email;
     let password=req.body.password;
     let sear= await search(email);
-    if(sear){
+    if(sear===0){
         await dbtasks(username,email,password);
         console.log(username,password,email);
         res.send(`Thank you for signing up!!\nWelcome ${username}`);
@@ -73,6 +74,27 @@ async function dbtasks(username,email,password){
         console.error("error:",err.stack);
     }
 }
+async function trips(id,title,destination,start,end,created_by){
+    try{
+        let tablequery=`
+        CREATE TABLE IF NOT EXISTS trips(
+            sno SERIAL PRIMARY KEY,
+            id VARCHAR(100) NOT NULL,
+            title VARCHAR(100) NOT NULL,
+            destination VARCHAR(100) NOT NULL,
+            start DATE NOT NULL,
+            end DATE NOT NULL,
+            created_by VARCHAR(100) NOT NULL
+        );
+        `;
+        await client.query(tablequery);
+        console.log('Trips ready');
+        let insertquery='INSERT INTO trips(id,title,destination,start,end,created_by) VALUES($1,$2,$3,$4,$5,$6) RETURNNING *;';
+        let result=await client.query(inertquery,[id,title,destination,start,end,created_by]);
+    }catch(err){
+        console.log("error:",err.stack);
+    }
+}
 async function search(email){
     try{
         let searchquery=`SELECT * FROM users WHERE email = $1;`;
@@ -91,9 +113,9 @@ async function login(email,password){
         let searchquery='SELECT * FROM users WHERE email =$1 AND password= $2;';
         let result =await client.query(searchquery,[email,password]);
         if(result.rows.length>0){
-            return 1;
+            return result.rows[0];
         }else{
-            return 0;
+            return null;
         }   
     }catch(err){
         console.log("Error:",err.stack);
