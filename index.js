@@ -1,3 +1,3 @@
-let name=document.getElementById("username");
-let email=document.getElementById("email");
-let password=document.getElementById("password");
+let name = document.querySelector('input[name="username"]');
+let email = document.querySelector('input[name="email"]');
+let password = document.querySelector('input[name="password"]');
