@@ -1,5 +1,3 @@
-const { sign } = require('crypto');
-const { create } = require('domain');
 const express=require('express');
 const app=express();
 const path=require('path');
@@ -25,6 +23,19 @@ app.use(express.urlencoded({ extended:true }));
 app.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname,'index.html'));
 });
+app.get('/api/search', async (req, res) => {
+    const query = req.query.q;
+    try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=7`, {
+            headers: { 'User-Agent': 'TravelAppProject/1.0' }
+        });
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch location data' });
+    }
+});
+
 app.post('/login' , async(req,res)=>{
     let password=req.body.password;
     let email=req.body.email;
