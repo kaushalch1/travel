@@ -19,6 +19,7 @@ client.connect()
 .catch((err)=>{
     console.log("Database connection error:",err.stack);
 })
+app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended:true }));
 
 app.get('/',(req,res)=>{
@@ -65,10 +66,10 @@ async function dbtasks(username,email,password){
         `;
         await client.query(createtable);
         console.log(`Users ready`);
-        let inertquery='INSERT INTO users(username,email,password) VALUES($1,$2,$3) RETURNING *;';
+        let insertquery='INSERT INTO users(username,email,password) VALUES($1,$2,$3) RETURNING *;';
         let insertvalues=[username,email,password];
         console.log(insertvalues);
-        let result=await client.query(inertquery,insertvalues);
+        let result=await client.query(insertquery,insertvalues);
         console.log('Succesfully added a user',result.rows[0]);
     }catch(err){
         console.error("error:",err.stack);
@@ -89,8 +90,8 @@ async function trips(id,title,destination,start,end,created_by){
         `;
         await client.query(tablequery);
         console.log('Trips ready');
-        let insertquery='INSERT INTO trips(id,title,destination,start,end,created_by) VALUES($1,$2,$3,$4,$5,$6) RETURNNING *;';
-        let result=await client.query(inertquery,[id,title,destination,start,end,created_by]);
+        let insertquery='INSERT INTO trips(id,title,destination,start,end,created_by) VALUES($1,$2,$3,$4,$5,$6) RETURNING *;';
+        let result=await client.query(insertquery,[id,title,destination,start,end,created_by]);
     }catch(err){
         console.log("error:",err.stack);
     }

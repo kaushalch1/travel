@@ -3,24 +3,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Travel</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+
+
+
     <div id="popup">
+        <form action="/login" method="post">
+            <label>Login:</label>
+            <input type="email" name="email" placeholder="Enter your email:" required>
+            <input type="password" name="password" placeholder="Enter your password:" required>
+            <button type="submit" id="submit">Submit</button>
+        </form>
     </div>
-    <form action="/login" method="post">
-        <label>Login:</label>
-        <input type="email" name="email" placeholder="Enter your email:" required>
-        <input type="password" name="password" placeholder="Enter your password:" required>
-        <button type="submit" id="submit">Submit</button>
-    </form>
-    <form action="/signup" method="post">
-        <label>Signup:</label>
-        <input type="text" name="username" placeholder="Enter your username:" required>
-        <input type="email" name="email" placeholder="Enter your email:" required>
-        <input type="password" name="password" placeholder="Enter your password:" required>
-        <button type="submit">Submit</button>
-    </form>
+    <div id="popup1">
+        <form action="/signup" method="post">
+            <h1>Signup:</h1>
+            <i class="fa-solid fa-user" style="color: rgb(177, 151, 252);"></i>
+            <input type="text" name="username" placeholder="Enter your username:" required>
+            <label>Your username:</label><br>
+            <i class="fa-solid fa-envelope" style="color: rgb(177, 151, 252);"></i>
+            <input type="email" name="email" placeholder="Enter your email:" required>
+            <label>Your email:</label><br>
+            <i class="fa-solid fa-key" style="color: rgb(177, 151, 252);"></i>
+            <input type="password" name="password" placeholder="Enter your password:" required>
+            <label>Your password:</label><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
     <script src="index.js"></script>
 </body>
 </html>
