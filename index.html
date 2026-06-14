@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-
-
     <div id="popup">
         <form action="/login" method="post">
             <label>Login:</label>
@@ -19,19 +16,24 @@
         </form>
     </div>
     <div id="popup1">
+    <section>
         <form action="/signup" method="post">
             <h1>Signup:</h1>
             <i class="fa-solid fa-user" style="color: rgb(177, 151, 252);"></i>
-            <input type="text" name="username" placeholder="Enter your username:" required>
-            <label>Your username:</label><br>
+            <div class="search-box">
+            <!-- <label>Your username:</label> -->
+             <div class="title">Username</div>
+            <input type="text" name="username" placeholder="Enter your username" id="input" required>
+            </div>
             <i class="fa-solid fa-envelope" style="color: rgb(177, 151, 252);"></i>
-            <input type="email" name="email" placeholder="Enter your email:" required>
-            <label>Your email:</label><br>
+            <label>Your email:</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
             <i class="fa-solid fa-key" style="color: rgb(177, 151, 252);"></i>
-            <input type="password" name="password" placeholder="Enter your password:" required>
-            <label>Your password:</label><br>
+            <label>Your password:</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
             <button type="submit">Submit</button>
         </form>
+    </section>
     </div>
     <script src="index.js"></script>
 </body>

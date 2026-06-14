@@ -1,15 +1,99 @@
 *{
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-#submit{
-    height: 50px;
-    width: 50px;
-    background-color: orange;
-    color: white;
-    border: 1px solid white;
+body {
+    color: #333;
 }
-#popup1{
+#popup, #popup1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 50vh;
+    padding: 20px;
+}
+#popup1 {
+    min-height: 100vh;
+}
+section, #popup form {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+}
+h1, label[for="Login:"] {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #4a5568;
+    text-align: center;
+    display: block;
+}
+form i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+input:focus {
+    /*border-color: #667eea;*/
+    border-color: white;
+}
+label {
+    font-size: 0.9rem;
+    color: #718096;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+button:hover {
+    background-color: #5a67d8;
+}
+.search-box{
+    background-color: #fff;
+    border: 2px solid #ccccff;
+    border-radius: 14px;
+    padding: 12px 20px;
+    font-family: sans-serif;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+.title{
+    font-weight: bold;
+    color: #222222;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+#input{
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    padding: 0;
+    color: #222222;
+}
+#input::placeholder{
+    color: #aaaaaa;
+    opacity: 1;
 }
