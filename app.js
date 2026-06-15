@@ -1,3 +1,4 @@
+const { randomUUID } = require('crypto');
 const express=require('express');
 const app=express();
 const path=require('path');
@@ -34,6 +35,14 @@ app.get('/api/search', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch location data' });
     }
+});
+app.post('/createtrip',async(req,res)=>{
+    let id=randomUUID();
+    let destination=req.body.city;
+    let start_date=req.body.daterange.split(" to ")[0];
+    let end_date=req.body.daterange.split(" to ")[1];
+    let created_by
+    console.log(id,destination,start_date,end_date);
 });
 app.post('/login' , async(req,res)=>{
     let password=req.body.password;

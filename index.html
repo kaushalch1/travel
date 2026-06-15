@@ -5,17 +5,18 @@
     <title>Travel</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-    <h1>Trips:</h1>
-    <input type="search" id="city" placeholder="Where to go?">
-    <div id="options"></div>
-    <!-- <input type="date" id="date"> -->
-    <input type="text" id="date-range" placeholder="Select Date Range">
-
-
+    <form action="/createtrip" method="post">
+        <h1>Trips:</h1>
+        <label class="search-box">
+            <input type="search" class="search-input" name="city" id="city" placeholder="Where to go?">
+            <div id="options"></div>
+        </label>
+        <input type="text" name="daterange" id="date-range" placeholder="Select Date Range">
+        <button type="submit">Submit</button>
+    </form>
     <!-- <div id="popup">
     <div id="popup">
         <form action="/login" method="post">
@@ -48,8 +49,8 @@
             </label>
             <button type="submit">Submit</button>
         </form>
-    </div> -->
-    </div>
+    </div> 
+    </div>-->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="index.js"></script>
 </body>
