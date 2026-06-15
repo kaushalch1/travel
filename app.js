@@ -56,13 +56,25 @@ app.post('/login' , async(req,res)=>{
     let email=req.body.email;
     let sear = await search(email);
     if(sear===0){
+        return res.status(400).json({
+            success:false,
+            message:'Account not found'
+        })
         //res.send("You don't have an account,signup here");
     }else{
         let log=await login(email,password);
         if(log){
             //res.send(`Welcome come back ${log.username}`);
             res.cookie('username',log.username, { httpOnly: true });
+            return res.json({
+                success:true,
+                username:log.username
+            })
         }else{
+            return res.status(401).json({
+                success:false,
+                message:"Incorrect password"
+            })
             //res.send('The password is incorrect');
         }
     }
@@ -76,9 +88,17 @@ app.post('/signup',async(req,res)=>{
         await dbtasks(username,email,password);
         console.log(username,password,email);
         //res.send(`Thank you for signing up!!\nWelcome ${username}`);
+        return res.json({
+            success:true,
+            message:"User aleady exists"
+        })
     }else{
         //res.send("You already have an account");
         console.log("You already have an account!!");
+        return res.status(400).json({
+            success:false,
+            message:"User already exists"
+        })
     }
 });
 async function dbtasks(username,email,password){

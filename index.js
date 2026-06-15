@@ -54,3 +54,33 @@ if (tripForm) {
 } else {
     console.warn("Trip creation form not found. Ensure there's a form with action='/createtrip'.");
 }
+document.getElementById("login").addEventListener("submit",async(e)=>{
+    e.preventDefault();
+    let formdata=new FormData(e.target);
+    let response= await fetch("/login",{
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body:JSON.stringify(
+            Object.fromEntries(formdata.entries())
+        )
+    });
+    let result=await response.json();
+    console.log(result);
+})
+document.getElementById("signup").addEventListener("submit",async(e)=>{
+    e.preventDefault();
+    let formdata=new FormData(e.target);
+    let response= await fetch("/signup",{
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body:JSON.stringify(
+            Object.fromEntries(formdata.entries())
+        )
+    });
+    let result=await response.json();
+    console.log(result);
+})
