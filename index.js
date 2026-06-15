@@ -1,18 +1,27 @@
 let input=document.getElementById("city");
 let list=document.getElementById("options");
+flatpickr("#date-range", {
+    mode: "range",
+    minDate: "today",
+    dateFormat: "Y-m-d",
+});
+
 input.oninput=async()=>{
-    if(input.value.length< 2) return;
+    if(input.value.length < 2) {
+        list.innerHTML = '';
+        return;
+    }
     const res = await fetch(`/api/search?q=${input.value}`);
     let data=await res.json();
-    console.log(data.map(p => p.display_name.split(',').pop().trim()));
-    list.innerHTML = `
-        <option value="" disabled selected>Select a location...</option>
-        ${data.map(p => `<option value="${p.display_name}">${p.display_name}</option>`).join('')}
-    `;
+    list.innerHTML = data.map(p =>
+        `<div class="suggestion-item" data-value="${p.display_name.split(",")[0]}">
+            <p class="place">${p.display_name.split(",")[0]}</p><br><p class="country">${p.display_name.split(',').pop().trim()}</p>
+        </div>`
+    ).join('');
 }
-list.onchange = () => {
-    if (!list.value) return;
-    input.value = list.value;
-    const lastpart = list.value.split(',').pop();
-    console.log("Selected Location:", lastpart.trim());
+list.onclick = (e) => {
+    const item = e.target.closest('.suggestion-item');
+    if (!item) return;
+    input.value = item.getAttribute('data-value');
+    list.innerHTML = '';
 };

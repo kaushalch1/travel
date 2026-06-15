@@ -35,7 +35,6 @@ app.get('/api/search', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch location data' });
     }
 });
-
 app.post('/login' , async(req,res)=>{
     let password=req.body.password;
     let email=req.body.email;
