@@ -1,5 +1,6 @@
 const { randomUUID } = require('crypto');
 const express=require('express');
+const cookieParser=require('cookie-parser');
 const app=express();
 const path=require('path');
 require('dotenv').config();
@@ -11,6 +12,8 @@ let client=new Client({
     password: process.env.DB_PASSWORD,
     database:process.env.DB_DATABASE
 });
+app.use(express.json());
+app.use(cookieParser());
 client.connect()
 .then(()=>{
     console.log("Database connected succesfully");
@@ -22,7 +25,7 @@ app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended:true }));
 
 app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'index.html'));
+    //res.sendFile(path.join(__dirname,'index.html'));
 });
 app.get('/api/search', async (req, res) => {
     const query = req.query.q;
@@ -41,21 +44,26 @@ app.post('/createtrip',async(req,res)=>{
     let destination=req.body.city;
     let start_date=req.body.daterange.split(" to ")[0];
     let end_date=req.body.daterange.split(" to ")[1];
-    let created_by
-    console.log(id,destination,start_date,end_date);
+    let created_by=req.cookies.username;
+    if (!created_by) {
+    return res.status(401).send("No user found! Please log in.");
+    }
+    console.log(id,destination,start_date,end_date,created_by);
+    res.status(200).json({ message: "Trip created successfully", id: id, destination: destination });
 });
 app.post('/login' , async(req,res)=>{
     let password=req.body.password;
     let email=req.body.email;
     let sear = await search(email);
     if(sear===0){
-        res.send("You don't have an account,signup here");
+        //res.send("You don't have an account,signup here");
     }else{
         let log=await login(email,password);
         if(log){
-            res.send(`Welcome come back ${log.username}`);
+            //res.send(`Welcome come back ${log.username}`);
+            res.cookie('username',log.username, { httpOnly: true });
         }else{
-            res.send('The password is incorrect');
+            //res.send('The password is incorrect');
         }
     }
 });
@@ -67,9 +75,9 @@ app.post('/signup',async(req,res)=>{
     if(sear===0){
         await dbtasks(username,email,password);
         console.log(username,password,email);
-        res.send(`Thank you for signing up!!\nWelcome ${username}`);
+        //res.send(`Thank you for signing up!!\nWelcome ${username}`);
     }else{
-        res.send("You already have an account");
+        //res.send("You already have an account");
         console.log("You already have an account!!");
     }
 });

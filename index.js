@@ -25,3 +25,32 @@ list.onclick = (e) => {
     input.value = item.getAttribute('data-value');
     list.innerHTML = '';
 };
+
+let tripForm = document.querySelector("form[action='/createtrip']");
+if (tripForm) {
+    tripForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        let formData = new FormData(tripForm);
+        let dataObject = Object.fromEntries(formData.entries());
+        try {
+            const response = await fetch(tripForm.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataObject)
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+            }
+            let result = await response.json();
+            console.log("Trip creation successful:", result);
+
+        } catch (error) {
+            console.error("Error during form submission:", error);
+        }
+    });
+} else {
+    console.warn("Trip creation form not found. Ensure there's a form with action='/createtrip'.");
+}

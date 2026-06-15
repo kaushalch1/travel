@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-    <form action="/createtrip" method="post">
+    <form action="/createtrip" method="post" class="form">
         <h1>Trips:</h1>
         <label class="search-box">
             <input type="search" class="search-input" name="city" id="city" placeholder="Where to go?">
@@ -17,9 +17,9 @@
         <input type="text" name="daterange" id="date-range" placeholder="Select Date Range">
         <button type="submit">Submit</button>
     </form>
-    <!-- <div id="popup">
     <div id="popup">
-        <form action="/login" method="post">
+    <div id="popup">
+        <form action="/login" method="post" class="form">
             <h1>Login:</h1>
             <label class="search-box">
                 <i class="fa-solid fa-envelope"></i>
@@ -33,7 +33,7 @@
         </form>
     </div>
     <div id="popup1">
-        <form action="/signup" method="post">
+        <form action="/signup" method="post" class="form">
             <h1>Signup:</h1>
             <label class="search-box">
                 <i class="fa-solid fa-user"></i>
@@ -50,7 +50,7 @@
             <button type="submit">Submit</button>
         </form>
     </div> 
-    </div>-->
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="index.js"></script>
 </body>
