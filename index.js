@@ -19,13 +19,26 @@ input.oninput=async()=>{
         </div>`
     ).join('');
 }
+async function user(){
+    let response = await fetch("/api/fetchtrips");
+    if (!response.ok) return;
+    let trips = await response.json();
+    let mytripsContainer = document.getElementById("mytrips1");
+    if(trips.length > 0){
+        mytripsContainer.innerHTML = trips.map(trip => 
+            `<div><strong>${trip.title}</strong> - ${trip.destination}-${trip.start_date} to ${trip.end_date}</div>`
+        ).join('');
+    } else {
+        mytripsContainer.textContent = "No trips found.";
+    }
+}
+window.onload = user;
 list.onclick = (e) => {
     const item = e.target.closest('.suggestion-item');
     if (!item) return;
     input.value = item.getAttribute('data-value');
     list.innerHTML = '';
 };
-
 let tripForm = document.querySelector("form[action='/createtrip']");
 if (tripForm) {
     tripForm.addEventListener('submit', async (event) => {
@@ -84,3 +97,13 @@ document.getElementById("signup").addEventListener("submit",async(e)=>{
     let result=await response.json();
     console.log(result);
 })
+
+
+
+let personal=["Toothbrush","Toothpaste","Deodorant","Comb","Shampoo","Face wash"],
+utility=["Wallet","Home keys","Passport","Purse"],
+health=["Pain relievers","Vitamin","Fever tablets"],
+clothes=[],
+accesory=[],
+swim=[],
+footwear=[];

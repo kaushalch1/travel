@@ -5,6 +5,7 @@ const app=express();
 const path=require('path');
 require('dotenv').config();
 let { Client }=require('pg');
+const { error } = require('console');
 let client=new Client({
     host:process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -24,11 +25,8 @@ client.connect()
 app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended:true }));
 
-app.get('/',(req,res)=>{
+app.get('/',async(req,res)=>{
     res.sendFile(path.join(__dirname,'index.html'));
-    if(req.cookies.username){
-        await fetchtrips(req.cookies.username);
-    }
 });
 app.get('/api/search', async (req, res) => {
     const query = req.query.q;
@@ -42,6 +40,16 @@ app.get('/api/search', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch location data' });
     }
 });
+app.get('/api/fetchtrips',async(req,res)=>{
+    try{
+        let username = req.cookies.username;
+        if (!username) return res.status(401).json([]);
+        let result = await fetchtrips(username);
+        res.json(result.rows);
+    }catch(error){
+        res.status(500).json({error:'Failed fetching data'});
+    }
+})
 app.post('/createtrip',async(req,res)=>{
     let created_by=req.cookies.username;
     if (!created_by) {
@@ -170,20 +178,13 @@ async function fetchtrips(username) {
     try{
         let searchquery=`SELECT * FROM trips WHERE created_by = $1;`;
         let result=await client.query(searchquery,[username]);
-        if(result.rows.length>0){
-            for(let i=0;i<result.rows.length[i];i++){
-                let div=document.getElementById("mytrips");
-                div.innerHTML=result.rows.length[i];
-            }
-        }else{
-            return;
-        }
+        return result;
     }catch(err){
         console.log("Error:",err.stack);
     }
 }
 async function login(email,password){
-    try{
+    try{7
         let searchquery='SELECT * FROM users WHERE email =$1 AND password= $2;';
         let result =await client.query(searchquery,[email,password]);
         if(result.rows.length>0){
