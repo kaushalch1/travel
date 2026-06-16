@@ -25,7 +25,10 @@ app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended:true }));
 
 app.get('/',(req,res)=>{
-    //res.sendFile(path.join(__dirname,'index.html'));
+    res.sendFile(path.join(__dirname,'index.html'));
+    if(req.cookies.username){
+        await fetchtrips(req.cookies.username);
+    }
 });
 app.get('/api/search', async (req, res) => {
     const query = req.query.q;
@@ -40,15 +43,21 @@ app.get('/api/search', async (req, res) => {
     }
 });
 app.post('/createtrip',async(req,res)=>{
-    let id=randomUUID();
-    let destination=req.body.city;
-    let start_date=req.body.daterange.split(" to ")[0];
-    let end_date=req.body.daterange.split(" to ")[1];
     let created_by=req.cookies.username;
     if (!created_by) {
     return res.status(401).send("No user found! Please log in.");
     }
-    console.log(id,destination,start_date,end_date,created_by);
+    let id=randomUUID();
+    let destination=req.body.city;
+    let start_date=new Date(req.body.daterange.split(" to ")[0].trim(" ")+ 'T00:00:00');
+    let end_date=new Date(req.body.daterange.split(" to ")[1].trim(" ")+ 'T00:00:00');
+    let title="Trip to "+destination;
+    await trips(id, title, destination, start_date, end_date, created_by);
+    if (!start_date || !end_date) {
+        return res.status(400).json({ error: "Please select a valid date range (Start and End date)." });
+    }
+
+    console.log(id,destination,start_date,end_date,created_by,title);    
     res.status(200).json({ message: "Trip created successfully", id: id, destination: destination });
 });
 app.post('/login' , async(req,res)=>{
@@ -90,7 +99,7 @@ app.post('/signup',async(req,res)=>{
         //res.send(`Thank you for signing up!!\nWelcome ${username}`);
         return res.json({
             success:true,
-            message:"User aleady exists"
+            message:"Signup successful!"
         })
     }else{
         //res.send("You already have an account");
@@ -122,7 +131,7 @@ async function dbtasks(username,email,password){
         console.error("error:",err.stack);
     }
 }
-async function trips(id,title,destination,start,end,created_by){
+async function trips(id,title,destination,start_date,end_date,created_by){
     try{
         let tablequery=`
         CREATE TABLE IF NOT EXISTS trips(
@@ -130,15 +139,16 @@ async function trips(id,title,destination,start,end,created_by){
             id VARCHAR(100) NOT NULL,
             title VARCHAR(100) NOT NULL,
             destination VARCHAR(100) NOT NULL,
-            start DATE NOT NULL,
-            end DATE NOT NULL,
+            start_date DATE NOT NULL,
+            end_date DATE NOT NULL,
             created_by VARCHAR(100) NOT NULL
         );
         `;
         await client.query(tablequery);
         console.log('Trips ready');
-        let insertquery='INSERT INTO trips(id,title,destination,start,end,created_by) VALUES($1,$2,$3,$4,$5,$6) RETURNING *;';
-        let result=await client.query(insertquery,[id,title,destination,start,end,created_by]);
+        let insertquery='INSERT INTO trips(id,title,destination,start_date,end_date,created_by) VALUES($1,$2,$3,$4,$5,$6) RETURNING *;';
+        let result=await client.query(insertquery,[id,title,destination,start_date,end_date,created_by]);
+
     }catch(err){
         console.log("error:",err.stack);
     }
@@ -154,6 +164,22 @@ async function search(email){
         }
     }catch(err){
         console.error("error:",err.stack);
+    }
+}
+async function fetchtrips(username) {
+    try{
+        let searchquery=`SELECT * FROM trips WHERE created_by = $1;`;
+        let result=await client.query(searchquery,[username]);
+        if(result.rows.length>0){
+            for(let i=0;i<result.rows.length[i];i++){
+                let div=document.getElementById("mytrips");
+                div.innerHTML=result.rows.length[i];
+            }
+        }else{
+            return;
+        }
+    }catch(err){
+        console.log("Error:",err.stack);
     }
 }
 async function login(email,password){

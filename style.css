@@ -139,3 +139,7 @@ button:hover {
     color: #777777;
     display: inline-block;
 }
+#date-range{
+    outline: none;
+    border: none;
+}
