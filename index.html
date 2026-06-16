@@ -8,23 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-    <form action="/createtrip" method="post" class="form">
-        <h1>Trips:</h1>
-        <label class="search-box">
-            <i class="fa-solid fa-location-arrow"></i>
-            <input type="search" class="search-input" name="city" id="city" placeholder="Where to go?" required>
-            <div id="options"></div>
-        </label>
-        <label class="search-box">
-            <i class="fa-regular fa-calendar-days"></i>
-            <input type="text" name="daterange" id="date-range" placeholder="Select Date Range" required>
-        </label>
-        <button type="submit">Submit</button>
-    </form>
-    <div id="mytrips">
-        <p id="mytrips1"></p>
-    </div>
-    <!-- <div id="popup">
+     <div id="popup">
         <form action="/login" method="post" class="form" id="login">
             <h1>Login:</h1>
             <label class="search-box">
@@ -35,11 +19,12 @@
                 <i class="fa-solid fa-key"></i>
                 <input type="password" class="search-input" name="password" placeholder="Enter your password" required>
             </label>
-            <button type="submit" id="submit">Submit</button>
+            <button type="submit" id="submit">Login</button>
+            <p style="text-align: center;">Don't have an account?<a href="#" id="show-signup" style="color: rgb(177, 151, 252);">Signup</a></p>
         </form>
     </div>
     <div id="popup1">
-        <form action="/signup" method="post" class="form" id="signup">
+        <form action="/signup" method="post" class="form hidden" id="signup" >
             <h1>Signup:</h1>
             <label class="search-box">
                 <i class="fa-solid fa-user"></i>
@@ -53,9 +38,30 @@
                 <i class="fa-solid fa-key"></i>
                 <input type="password" class="search-input" name="password" placeholder="Enter your password" required>
             </label>
-            <button type="submit">Submit</button>
+            <button type="submit">Create account</button>
+            <p style="text-align: center;">Already have an account?<a href="#" id="show-signup" style="color: rgb(177, 151, 252);">Login</a></p>
         </form>
-    </div> -->
+    </div>
+    <div id="app-section" class="hidden">
+        <!--welcome user-->
+        <form action="/createtrip" method="post" class="form" style="display: none;">
+            <h1>Trips:</h1>
+            <label class="search-box">
+                <i class="fa-solid fa-location-arrow"></i>
+                <input type="search" class="search-input" name="city" id="city" placeholder="Where to go?" required>
+                <div id="options"></div>
+            </label>
+            <label class="search-box">
+                <i class="fa-regular fa-calendar-days"></i>
+                <input type="text" name="daterange" id="date-range" placeholder="Select Date Range" required>
+            </label>
+            <button type="submit">Start Planning</button>
+        </form>
+        <div id="mytrips">
+            <h1>My trips:</h1>
+            <p id="mytrips1"></p>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="index.js"></script>
 </body>

@@ -21,8 +21,13 @@ input.oninput=async()=>{
 }
 async function user(){
     let response = await fetch("/api/fetchtrips");
-    if (!response.ok) return;
+    if (!response.ok) {
+        showauth(true);
+        return;
+    };
     let trips = await response.json();
+    document.getElementById("auth-section").classList.add("hidden");
+    document.getElementById("app-section").classList.remove("hidden");
     let mytripsContainer = document.getElementById("mytrips1");
     if(trips.length > 0){
         mytripsContainer.innerHTML = trips.map(trip => 
@@ -33,6 +38,20 @@ async function user(){
     }
 }
 window.onload = user;
+function showauth(islogin){
+    document.getElementById("popup").classList.toggle("hidden", !isLogin);
+    document.getElementById("popup1").classList.toggle("hidden", isLogin);
+    document.getElementById("app-section").classList.add("hidden");
+    document.getElementById("auth-section").classList.remove("hidden");
+}
+document.getElementById("show-signup").onclick = (e) => {
+    e.preventDefault();
+    showAuth(false);
+};
+document.getElementById("show-login").onclick = (e) => {
+    e.preventDefault();
+    showAuth(true); 
+};
 list.onclick = (e) => {
     const item = e.target.closest('.suggestion-item');
     if (!item) return;
@@ -100,10 +119,14 @@ document.getElementById("signup").addEventListener("submit",async(e)=>{
 
 
 
-let personal=["Toothbrush","Toothpaste","Deodorant","Comb","Shampoo","Face wash"],
-utility=["Wallet","Home keys","Passport","Purse"],
-health=["Pain relievers","Vitamin","Fever tablets"],
-clothes=[],
-accesory=[],
-swim=[],
-footwear=[];
+// let personal=["Toothbrush","Toothpaste","Deodorant","Comb","Shampoo","Face wash"],
+// utility=["Wallet","Home keys","Passport","Purse","Cash"],
+// health=["Pain relievers","Vitamin","Fever tablets"],
+// clothes=["Shirts/Tees","Pajamas","Pants","Shorts","Dresses"],
+// accesories=["Sunglass","Hair tie","Hat"],
+// electronics=["Phone","Phone charger"]
+// swim=["Swimsuit","Beach towel","Sunscreen"],
+// footwear=["Sandals","Shoes","Flip-Flops"];
+// if(list==="packing list"){
+    
+// }

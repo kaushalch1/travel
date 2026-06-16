@@ -143,3 +143,11 @@ button:hover {
     outline: none;
     border: none;
 }
+.hidden{
+    display: none;
+}
+#mytrips {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+}
