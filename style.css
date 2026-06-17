@@ -60,7 +60,6 @@ button:hover {
 .search-box{
     position: relative;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     background-color: #ffffff;
@@ -94,19 +93,8 @@ button:hover {
     color: #aaaaaa;
 }
 .search-box:focus-within {
-    align-items: flex-start;
     border-color: #b0b0ff;
     box-shadow: 0 0 0 2px #e3e3ff;
-}        
-.search-box:focus-within .title {
-    width: 100%;
-    font-size: 12px;
-    color: #222222;
-    margin-left: 28px;
-}
-.search-box:focus-within .search-input {
-    font-style: normal;
-    padding-left: 28px;
 }
 #options {
     position: absolute;
@@ -146,7 +134,7 @@ button:hover {
     border: none;
 }
 .hidden{
-    display: none;
+    display:  none !important;
 }
 #mytrips {
     width: 100%;

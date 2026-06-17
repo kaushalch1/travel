@@ -71,8 +71,13 @@ function showauth(islogin){
     const authSection = document.getElementById("auth-section");
     appSection.classList.add("hidden");
     authSection.classList.remove("hidden");    
-    document.getElementById("popup").classList.toggle("hidden", !islogin);
-    document.getElementById("popup1").classList.toggle("hidden", islogin);
+    if (islogin) {
+        document.getElementById("popup").classList.remove("hidden");
+        document.getElementById("popup1").classList.add("hidden");
+    } else {
+        document.getElementById("popup").classList.add("hidden");
+        document.getElementById("popup1").classList.remove("hidden");
+    }
 }
 document.getElementById("show-signup").onclick = (e) => {
     e.preventDefault();
