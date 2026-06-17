@@ -118,6 +118,7 @@ if (tripForm) {
             console.error("Error during form submission:", error);
         }
     });
+    window.location.reload();
 } else {
     console.warn("Trip creation form not found. Ensure there's a form with action='/createtrip'.");
 }
