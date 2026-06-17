@@ -27,10 +27,11 @@ async function user(){
         return;
     };
     let trips = await response.json();
-    document.getElementById("popup").classList.add("hidden");
-    document.getElementById("popup1").classList.add("hidden");
-    document.getElementById("auth-section").classList.add("hidden");
-    document.getElementById("app-section").classList.remove("hidden");
+    const authSection = document.getElementById("auth-section");
+    const appSection = document.getElementById("app-section");
+    authSection.classList.add("hidden");
+    appSection.classList.remove("hidden");
+
     let mytripsContainer = document.getElementById("mytrips1");
     mytripsContainer.style.display = "flex";
     mytripsContainer.style.flexWrap = "wrap";
@@ -66,8 +67,10 @@ document.getElementById("save").addEventListener("click", async() => {
 })
 window.onload = user;
 function showauth(islogin){
-    document.getElementById("app-section").classList.add("hidden");
-    document.getElementById("auth-section").classList.remove("hidden");
+    const appSection = document.getElementById("app-section");
+    const authSection = document.getElementById("auth-section");
+    appSection.classList.add("hidden");
+    authSection.classList.remove("hidden");    
     document.getElementById("popup").classList.toggle("hidden", !islogin);
     document.getElementById("popup1").classList.toggle("hidden", islogin);
 }

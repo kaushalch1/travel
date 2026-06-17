@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-    <div id="auth-section">
+    <div id="auth-section" class="hidden">
         <div id="popup">
             <form action="/login" method="post" class="form" id="login">
                 <h1>Login:</h1>
                 <label class="search-box">
                     <i class="fa-solid fa-envelope"></i>
-                    <input type="email" class="search-input" name="email" placeholder="Enter your email" required>
+                    <input type="email" class="search-input" name="email" placeholder="Enter your email" required autocomplete="email">
                 </label>
                 <label class="search-box">
                     <i class="fa-solid fa-key"></i>
@@ -24,8 +24,8 @@
                 <p style="text-align: center;">Don't have an account?<a href="#" id="show-signup" style="color: rgb(177, 151, 252);">Signup</a></p>
             </form>
         </div>
-        <div id="popup1">
-            <form action="/signup" method="post" class="form hidden" id="signup" >
+        <div id="popup1" class="hidden">
+            <form action="/signup" method="post" class="form" id="signup" >
                 <h1>Signup:</h1>
                 <label class="search-box">
                     <i class="fa-solid fa-user"></i>

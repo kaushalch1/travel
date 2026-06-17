@@ -22,10 +22,38 @@ app.use(cookieParser());
 client.connect()
 .then(()=>{
     console.log("Database connected succesfully");
+    initializedatabase();
 })
 .catch((err)=>{
     console.log("Database connection error:",err.stack);
 })
+async function initializedatabase(){
+    const createUsersTable = `
+        CREATE TABLE IF NOT EXISTS users(
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            password VARCHAR(100) NOT NULL
+        );`;
+    const createTripsTable = `
+        CREATE TABLE IF NOT EXISTS trips(
+            sno SERIAL PRIMARY KEY,
+            id VARCHAR(100) NOT NULL,
+            title VARCHAR(100) NOT NULL,
+            destination VARCHAR(100) NOT NULL,
+            start_date DATE NOT NULL,
+            end_date DATE NOT NULL,
+            created_by VARCHAR(100) NOT NULL,
+            content TEXT
+        );`;
+    try {
+        await client.query(createUsersTable);
+        await client.query(createTripsTable);
+        console.log("Database tables initialized");
+    } catch (err) {
+        console.error("Error initializing tables:", err);
+    }
+}
 app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended:true }));
 
@@ -134,16 +162,6 @@ app.post('/signup',async(req,res)=>{
 });
 async function dbtasks(username,email,password){
     try{
-        let createtable=`
-        CREATE TABLE IF NOT EXISTS users(
-            id SERIAL PRIMARY KEY,
-            username VARCHAR(100) NOT NULL,
-            email VARCHAR(100) NOT NULL,
-            password VARCHAR(100) NOT NULL
-        ); 
-        `;
-        await client.query(createtable);
-        console.log(`Users ready`);
         let insertquery='INSERT INTO users(username,email,password) VALUES($1,$2,$3) RETURNING *;';
         let insertvalues=[username,email,password];
         console.log(insertvalues);
@@ -155,20 +173,6 @@ async function dbtasks(username,email,password){
 }
 async function trips(id,title,destination,start_date,end_date,created_by){
     try{
-        let tablequery=`
-        CREATE TABLE IF NOT EXISTS trips(
-            sno SERIAL PRIMARY KEY,
-            id VARCHAR(100) NOT NULL,
-            title VARCHAR(100) NOT NULL,
-            destination VARCHAR(100) NOT NULL,
-            start_date DATE NOT NULL,
-            end_date DATE NOT NULL,
-            created_by VARCHAR(100) NOT NULL,
-            content TEXT
-        );
-        `;
-        await client.query(tablequery);
-        console.log('Trips ready');
         let insertquery='INSERT INTO trips(id,title,destination,start_date,end_date,created_by) VALUES($1,$2,$3,$4,$5,$6) RETURNING *;';
         let result=await client.query(insertquery,[id,title,destination,start_date,end_date,created_by]);
 
