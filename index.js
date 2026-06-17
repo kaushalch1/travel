@@ -41,21 +41,26 @@ async function user(){
                 <h3 style="margin-top: 0; color: #2c3e50;">${trip.title}</h3>
                 <p style="margin: 5px 0;"><strong>Destination:</strong> ${trip.destination}</p>
                 <p style="margin: 5px 0;"><strong>Trip Dates:</strong><br>${trip.start_date} to ${trip.end_date}</p>
-                <button id="notes" style="">View notes!!</button>
+                <button id="notes" onclick="pop(${trip.id},${trip.content})" style="">View notes!!</button>
             </div>`
         ).join('');
         let notes=document.getElementById("notes");
-        notes.addEventListener('click',()=>{
-            notes.showModal();
-        })
-        let save=document.getElementById("click");
+        function pop(id,content){
+            document.getElementById("popup2").showModal();
+            document.getElementById("note-input").value = content;
+            // let response=await fetch("api/updatenotes");
+            // console.log(response);
+        }
+
+        let save=document.getElementById("save");
         save.addEventListener("click",()=>{
-            notes.close();
+            document.getElementById("popup2").close();
         })
-    } else {
+    }else {
         mytripsContainer.textContent = "No trips found.";
     }
 }
+
 window.onload = user;
 function showauth(islogin){
     document.getElementById("app-section").classList.add("hidden");
@@ -145,7 +150,6 @@ document.getElementById("signup").addEventListener("submit",async(e)=>{
         alert(result.message);
     }
 })
-
 
 
 // let personal=["Toothbrush","Toothpaste","Deodorant","Comb","Shampoo","Face wash"],

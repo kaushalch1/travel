@@ -49,7 +49,18 @@ app.get('/api/fetchtrips',async(req,res)=>{
     }catch(error){
         res.status(500).json({error:'Failed fetching data'});
     }
-})
+});
+app.post('/api/updatenotes',async(req,res)=>{
+    const { id, content } = req.body;
+    let username=req.cookies.username;
+    if(!username) return res.status(401).json([]);
+    try{
+        await client.query("UPDATE trips SET content=$1 WHERE id=$2 AND created_by=$3",[content,id,username]);
+        res.json({success:true});
+    }catch(error){
+        res.status(500).json({error:'Failed editing data'});
+    }
+});
 app.post('/createtrip',async(req,res)=>{
     let created_by=req.cookies.username;
     if (!created_by) {
