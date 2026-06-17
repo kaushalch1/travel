@@ -31,12 +31,27 @@ async function user(){
     document.getElementById("auth-section").classList.add("hidden");
     document.getElementById("app-section").classList.remove("hidden");
     let mytripsContainer = document.getElementById("mytrips1");
+    mytripsContainer.style.display = "flex";
+    mytripsContainer.style.flexWrap = "wrap";
+    mytripsContainer.style.gap = "20px";
     if(trips.length > 0){
+        document.getElementById("welcome").textContent="Welcome "+trips[0].created_by;
         mytripsContainer.innerHTML = trips.map(trip => 
-            `<div class="form"><strong>${trip.title}</strong> - ${trip.destination}-${trip.start_date} to ${trip.end_date}
-            <button>Write notes!!</button>
+            `<div class="trip-card">
+                <h3 style="margin-top: 0; color: #2c3e50;">${trip.title}</h3>
+                <p style="margin: 5px 0;"><strong>Destination:</strong> ${trip.destination}</p>
+                <p style="margin: 5px 0;"><strong>Trip Dates:</strong><br>${trip.start_date} to ${trip.end_date}</p>
+                <button id="notes" style="">View notes!!</button>
             </div>`
         ).join('');
+        let notes=document.getElementById("notes");
+        notes.addEventListener('click',()=>{
+            notes.showModal();
+        })
+        let save=document.getElementById("click");
+        save.addEventListener("click",()=>{
+            notes.close();
+        })
     } else {
         mytripsContainer.textContent = "No trips found.";
     }

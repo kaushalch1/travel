@@ -45,7 +45,7 @@
         </div>
     </div>
     <div id="app-section" class="hidden">
-        <!--welcome user-->
+        <p id="welcome">Welcome!!</p>
         <form action="/createtrip" method="post" class="form">
             <h1>Plan a Trip:</h1>
             <label class="search-box">
@@ -64,6 +64,11 @@
             <div id="mytrips1"></div>
         </div>
     </div>
+    <dialog id="popup2">
+        <h2>Notes for your trip</h2>
+        <textarea id="note-input" style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea><br>
+        <button id="save">Save</button>
+    </dialog>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="index.js"></script>
 </body>

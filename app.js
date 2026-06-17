@@ -59,8 +59,6 @@ app.post('/createtrip',async(req,res)=>{
     let destination=req.body.city;
     let start_date=new Date(req.body.daterange.split(" to ")[0].trim(" ")+ 'T00:00:00');
     let end_date=new Date(req.body.daterange.split(" to ")[1].trim(" ")+ 'T00:00:00');
-    // start_date= new Date(start_date).toISOString().split('T')[0];
-    // end_date= new Date(end_date).toISOString().split('T')[0];
     let title="Trip to "+destination;
     await trips(id, title, destination, start_date, end_date, created_by);
     if (!start_date || !end_date) {
@@ -178,7 +176,10 @@ async function search(email){
 }
 async function fetchtrips(username) {
     try{
-        let searchquery=`SELECT * FROM trips WHERE created_by = $1;`;
+        let searchquery=`SELECT *,
+        TO_CHAR(start_date, 'DD-MM-YYYY') AS start_date,
+        TO_CHAR(end_date, 'DD-MM-YYYY') AS end_date
+        FROM trips WHERE created_by = $1;`;
         let result=await client.query(searchquery,[username]);
         return result;
     }catch(err){
