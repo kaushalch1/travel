@@ -6,13 +6,17 @@ const path=require('path');
 require('dotenv').config();
 let { Client }=require('pg');
 const { error } = require('console');
-let client=new Client({
-    host:process.env.DB_HOST,
+let client = new Client(process.env.DATABASE_URL ? {
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+} : {
+    host: process.env.DB_HOST,
     user: process.env.DB_USER,
-    port:process.env.DB_PORT,
+    port: process.env.DB_PORT,
     password: process.env.DB_PASSWORD,
-    database:process.env.DB_DATABASE
+    database: process.env.DB_DATABASE
 });
+
 app.use(express.json());
 app.use(cookieParser());
 client.connect()
@@ -210,4 +214,5 @@ async function login(email,password){
         console.log("Error:",err.stack);
     }
 }
-app.listen(3000,()=>console.log('Server running in PORT:3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT,()=>console.log(`Server running in PORT:${PORT}`));

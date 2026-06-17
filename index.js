@@ -19,6 +19,7 @@ input.oninput=async()=>{
         </div>`
     ).join('');
 }
+let currentTripId = null;
 async function user(){
     let response = await fetch("/api/fetchtrips");
     if (!response.ok) {
@@ -41,40 +42,42 @@ async function user(){
                 <h3 style="margin-top: 0; color: #2c3e50;">${trip.title}</h3>
                 <p style="margin: 5px 0;"><strong>Destination:</strong> ${trip.destination}</p>
                 <p style="margin: 5px 0;"><strong>Trip Dates:</strong><br>${trip.start_date} to ${trip.end_date}</p>
-                <button id="notes" onclick="pop(${trip.id},${trip.content})" style="">View notes!!</button>
+                <button onclick="pop('${trip.id}', \`${trip.content || ''}\`)" style="cursor:pointer; padding: 5px 10px; border-radius: 4px; border: 1px solid #ccc;">View notes!!</button>
             </div>`
         ).join('');
-        let notes=document.getElementById("notes");
-        function pop(id,content){
-            document.getElementById("popup2").showModal();
-            document.getElementById("note-input").value = content;
-            // let response=await fetch("api/updatenotes");
-            // console.log(response);
-        }
-
-        let save=document.getElementById("save");
-        save.addEventListener("click",()=>{
-            document.getElementById("popup2").close();
-        })
     }else {
         mytripsContainer.textContent = "No trips found.";
     }
 }
-
+function pop(id,content){
+    document.getElementById("popup2").showModal();
+    currentTripId=id;
+    document.getElementById("note-input").value = content;
+}
+document.getElementById("save").addEventListener("click", async() => {
+    document.getElementById("popup2").close();
+    let content=document.getElementById("note-input").value;
+    let response=await fetch("api/updatenotes",{
+        method:'POST',
+        headers: { "Content-Type": "application/json" },
+        body:JSON.stringify({id:currentTripId,content})
+    });
+    window.location.reload();
+})
 window.onload = user;
 function showauth(islogin){
     document.getElementById("app-section").classList.add("hidden");
     document.getElementById("auth-section").classList.remove("hidden");
-    document.getElementById("popup").classList.toggle("hidden", !isLogin);
-    document.getElementById("popup1").classList.toggle("hidden", isLogin);
+    document.getElementById("popup").classList.toggle("hidden", !islogin);
+    document.getElementById("popup1").classList.toggle("hidden", islogin);
 }
 document.getElementById("show-signup").onclick = (e) => {
     e.preventDefault();
-    showAuth(false);
+    showauth(false);
 };
 document.getElementById("show-login").onclick = (e) => {
     e.preventDefault();
-    showAuth(true); 
+    showauth(true); 
 };
 list.onclick = (e) => {
     const item = e.target.closest('.suggestion-item');
