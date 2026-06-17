@@ -59,12 +59,13 @@ app.post('/createtrip',async(req,res)=>{
     let destination=req.body.city;
     let start_date=new Date(req.body.daterange.split(" to ")[0].trim(" ")+ 'T00:00:00');
     let end_date=new Date(req.body.daterange.split(" to ")[1].trim(" ")+ 'T00:00:00');
+    // start_date= new Date(start_date).toISOString().split('T')[0];
+    // end_date= new Date(end_date).toISOString().split('T')[0];
     let title="Trip to "+destination;
     await trips(id, title, destination, start_date, end_date, created_by);
     if (!start_date || !end_date) {
         return res.status(400).json({ error: "Please select a valid date range (Start and End date)." });
     }
-
     console.log(id,destination,start_date,end_date,created_by,title);    
     res.status(200).json({ message: "Trip created successfully", id: id, destination: destination });
 });
@@ -149,7 +150,8 @@ async function trips(id,title,destination,start_date,end_date,created_by){
             destination VARCHAR(100) NOT NULL,
             start_date DATE NOT NULL,
             end_date DATE NOT NULL,
-            created_by VARCHAR(100) NOT NULL
+            created_by VARCHAR(100) NOT NULL,
+            content TEXT
         );
         `;
         await client.query(tablequery);
@@ -184,7 +186,7 @@ async function fetchtrips(username) {
     }
 }
 async function login(email,password){
-    try{7
+    try{
         let searchquery='SELECT * FROM users WHERE email =$1 AND password= $2;';
         let result =await client.query(searchquery,[email,password]);
         if(result.rows.length>0){

@@ -8,44 +8,46 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-     <div id="popup">
-        <form action="/login" method="post" class="form" id="login">
-            <h1>Login:</h1>
-            <label class="search-box">
-                <i class="fa-solid fa-envelope"></i>
-                <input type="email" class="search-input" name="email" placeholder="Enter your email" required>
-            </label>
-            <label class="search-box">
-                <i class="fa-solid fa-key"></i>
-                <input type="password" class="search-input" name="password" placeholder="Enter your password" required>
-            </label>
-            <button type="submit" id="submit">Login</button>
-            <p style="text-align: center;">Don't have an account?<a href="#" id="show-signup" style="color: rgb(177, 151, 252);">Signup</a></p>
-        </form>
-    </div>
-    <div id="popup1">
-        <form action="/signup" method="post" class="form hidden" id="signup" >
-            <h1>Signup:</h1>
-            <label class="search-box">
-                <i class="fa-solid fa-user"></i>
-                <input type="text" class="search-input" name="username" placeholder="Enter your username" id="input" required>
-            </label>
-            <label class="search-box">
-                <i class="fa-solid fa-envelope"></i>
-                <input type="email" class="search-input" name="email" placeholder="Enter your email" required>
-            </label>
-            <label class="search-box">
-                <i class="fa-solid fa-key"></i>
-                <input type="password" class="search-input" name="password" placeholder="Enter your password" required>
-            </label>
-            <button type="submit">Create account</button>
-            <p style="text-align: center;">Already have an account?<a href="#" id="show-signup" style="color: rgb(177, 151, 252);">Login</a></p>
-        </form>
+    <div id="auth-section">
+        <div id="popup">
+            <form action="/login" method="post" class="form" id="login">
+                <h1>Login:</h1>
+                <label class="search-box">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" class="search-input" name="email" placeholder="Enter your email" required>
+                </label>
+                <label class="search-box">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="password" class="search-input" name="password" placeholder="Enter your password" required>
+                </label>
+                <button type="submit" id="submit">Login</button>
+                <p style="text-align: center;">Don't have an account?<a href="#" id="show-signup" style="color: rgb(177, 151, 252);">Signup</a></p>
+            </form>
+        </div>
+        <div id="popup1">
+            <form action="/signup" method="post" class="form hidden" id="signup" >
+                <h1>Signup:</h1>
+                <label class="search-box">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" class="search-input" name="username" placeholder="Enter your username" id="input" required>
+                </label>
+                <label class="search-box">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" class="search-input" name="email" placeholder="Enter your email" required>
+                </label>
+                <label class="search-box">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="password" class="search-input" name="password" placeholder="Enter your password" required>
+                </label>
+                <button type="submit">Create account</button>
+                <p style="text-align: center;">Already have an account?<a href="#" id="show-login" style="color: rgb(177, 151, 252);">Login</a></p>
+            </form>
+        </div>
     </div>
     <div id="app-section" class="hidden">
         <!--welcome user-->
-        <form action="/createtrip" method="post" class="form" style="display: none;">
-            <h1>Trips:</h1>
+        <form action="/createtrip" method="post" class="form">
+            <h1>Plan a Trip:</h1>
             <label class="search-box">
                 <i class="fa-solid fa-location-arrow"></i>
                 <input type="search" class="search-input" name="city" id="city" placeholder="Where to go?" required>
@@ -57,9 +59,9 @@
             </label>
             <button type="submit">Start Planning</button>
         </form>
-        <div id="mytrips">
+        <div id="mytrips" class="form" style="align-items:flex-start;">
             <h1>My trips:</h1>
-            <p id="mytrips1"></p>
+            <div id="mytrips1"></div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

@@ -7,11 +7,12 @@
 body {
     color: #333;
 }
-#popup, #popup1 {
+#popup, #popup1, #app-section {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 50vh;
+    min-height: 100vh;
     padding: 20px;
 }
 #popup1 {
@@ -27,6 +28,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin: 20px auto;
 }
 h1 {
     font-size: 1.8rem;

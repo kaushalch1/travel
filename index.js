@@ -26,12 +26,16 @@ async function user(){
         return;
     };
     let trips = await response.json();
+    document.getElementById("popup").classList.add("hidden");
+    document.getElementById("popup1").classList.add("hidden");
     document.getElementById("auth-section").classList.add("hidden");
     document.getElementById("app-section").classList.remove("hidden");
     let mytripsContainer = document.getElementById("mytrips1");
     if(trips.length > 0){
         mytripsContainer.innerHTML = trips.map(trip => 
-            `<div><strong>${trip.title}</strong> - ${trip.destination}-${trip.start_date} to ${trip.end_date}</div>`
+            `<div class="form"><strong>${trip.title}</strong> - ${trip.destination}-${trip.start_date} to ${trip.end_date}
+            <button>Write notes!!</button>
+            </div>`
         ).join('');
     } else {
         mytripsContainer.textContent = "No trips found.";
@@ -39,10 +43,10 @@ async function user(){
 }
 window.onload = user;
 function showauth(islogin){
-    document.getElementById("popup").classList.toggle("hidden", !isLogin);
-    document.getElementById("popup1").classList.toggle("hidden", isLogin);
     document.getElementById("app-section").classList.add("hidden");
     document.getElementById("auth-section").classList.remove("hidden");
+    document.getElementById("popup").classList.toggle("hidden", !isLogin);
+    document.getElementById("popup1").classList.toggle("hidden", isLogin);
 }
 document.getElementById("show-signup").onclick = (e) => {
     e.preventDefault();
@@ -99,7 +103,12 @@ document.getElementById("login").addEventListener("submit",async(e)=>{
         )
     });
     let result=await response.json();
-    console.log(result);
+    // console.log(result);
+    if(result.success){
+        user();
+    }else{
+        alert(result.message);
+    }
 })
 document.getElementById("signup").addEventListener("submit",async(e)=>{
     e.preventDefault();
@@ -114,7 +123,12 @@ document.getElementById("signup").addEventListener("submit",async(e)=>{
         )
     });
     let result=await response.json();
-    console.log(result);
+    // console.log(result);
+    if(result.success){
+        user();
+    }else{
+        alert(result.message);
+    }
 })
 
 
