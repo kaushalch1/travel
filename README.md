@@ -1,6 +1,8 @@
 Travel Planner Web Application
 
 A full-stack travel planning application that helps users organize trips, manage travel dates, and store personal trip notes. Users can create an account, log in, plan trips to different destinations, and keep track of their travel information in one place.The data is stored in the database ,so no need to worry about your progress!!
+Everything is stored in the form of tables in the postresql and fetched from it.The database is hosted in railway itself with the deployment is also hosted with it.
+Deploy link:https://travel-production-f593.up.railway.app/
 More features coming up!!
 ## Features:
   User Signup and Login
